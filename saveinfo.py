@@ -16,15 +16,18 @@ print(os.system('df /'))
 print(os.system('free'))
 entrada = input('Use: "mem", "net", "comandos" ou "backup" para mais detalhes, ou tecle para sair. ')
 
+def save(comando,processo):
+    nome = input('Digite um nome do arquivo para backup: ')
+    arquivo = open(nome,'w')
+    processo = subprocess.getoutput(comando)
+    arquivo.write(processo)
+    arquivo.close()
+
 if entrada == 'mem':
     print(os.system('df'))
     savemem = input('Deseja salvar dados sobre memoria? Digite "s" ou tecle para sair: ')
     if savemem == 's':
-        nome = input('Digite um nome do arquivo para backup: ')
-        arquivo = open(nome,'w')
-        mem = subprocess.getoutput('df')
-        arquivo.write(mem)
-        arquivo.close()
+        save('df','mem')
     else:
         print('Até breve!')
 
@@ -32,11 +35,7 @@ elif entrada == 'net':
     print(os.system('netstat'))
     savenet = input('Deseja salvar dados sobre rede? Digite "s" ou tecle para sair: ')
     if savenet == 's':
-        nome = input('Digite um nome do arquivo para backup: ')
-        arquivo = open(nome,'w')
-        netstat = subprocess.getoutput('netstat')
-        arquivo.write(netstat)
-        arquivo.close()
+        save('netstat','netstat')
     else:
         print('Até breve!')
 
@@ -44,11 +43,7 @@ elif entrada == 'comandos':
     print(os.system('ls /usr/bin'))
     savecmd = input('Deseja salvar os comandos disponiveis? Digite "s" ou tecle para sair: ')
     if savecmd == 's':
-        nome = input('Digite um nome do arquivo para backup: ')
-        arquivo = open(nome,'w')
-        comandos = subprocess.getoutput('ls /usr/bin')
-        arquivo.write(comandos)
-        arquivo.close()
+        save('ls /usr/bin','comandos')
     else:
         print('Até breve!')
 
